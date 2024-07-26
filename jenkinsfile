@@ -1,9 +1,11 @@
 pipeline {
-    agent { label 'aws-slave' }
+    agent any
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/my-app.git'
+                sshagent(credentials: ['Git-id']) {
+                    git 'git@github.com:heenagehlot/my-app.git'
+                }
             }
         }
         stage('Build') {
@@ -27,4 +29,6 @@ pipeline {
             }
         }
     }
+}
+
 }
